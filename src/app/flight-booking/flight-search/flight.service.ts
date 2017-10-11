@@ -1,4 +1,4 @@
-import { OAuthService } from 'angular-oauth2-oidc';
+import { BehaviorSubject } from 'rxjs/Rx';
 import { Flight } from '../../entities/flight';
 import { BASE_URL } from '../../app.tokens';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -10,11 +10,14 @@ export class FlightService {
 
     constructor(
         private http: HttpClient,
-        private oauthService: OAuthService,
         @Inject(BASE_URL) private baseUrl: string) { 
     }
 
     flights: Flight[] = [];
+
+    private flightsSubject = new BehaviorSubject<Flight[]>([]);
+    public flights$ = this.flightsSubject.asObservable();
+
 
     delay(): void {
 
@@ -35,13 +38,17 @@ export class FlightService {
         let newFlights: Flight[] = [ newFlight, ...oldFlights.slice(1) ];
 
         this.flights = newFlights;
+        this.flightsSubject.next(this.flights);
 
     }
 
     load(from: string, to: string): void {
         this.find(from, to)
             .subscribe(
-                flights => this.flights = flights,
+                flights => { 
+                    this.flights = flights; 
+                    this.flightsSubject.next(this.flights);
+                },  
                 err => console.error('Error loading flights', err));
     }
 

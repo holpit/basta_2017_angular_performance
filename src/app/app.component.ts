@@ -1,4 +1,3 @@
-import { JwksValidationHandler, OAuthService } from 'angular-oauth2-oidc';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
@@ -12,21 +11,7 @@ export class AppComponent implements OnInit {
   showWaitInfo = false;
 
   constructor(
-    private oauthService: OAuthService,
     private router: Router) {
-
-      oauthService.configure({
-          issuer: 'https://steyer-identity-server.azurewebsites.net/identity',
-          redirectUri: window.location.origin + '/index.html',
-          clientId: 'spa-demo',
-          scope: 'openid profile email voucher'
-      });
-
-
-      this.oauthService.tokenValidationHandler = new JwksValidationHandler();
-      this.oauthService.loadDiscoveryDocumentAndTryLogin();
-
-      this.oauthService.setupAutomaticSilentRefresh();
 
   }
 

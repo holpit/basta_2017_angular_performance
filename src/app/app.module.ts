@@ -1,5 +1,4 @@
-import { RouterModule } from '@angular/router';
-import { OAuthModule } from 'angular-oauth2-oidc';
+import { PreloadAllModules, RouterModule } from '@angular/router';
 import { SharedModule } from './shared/shared.module';
 import { BasketComponent } from './basket/basket.component';
 import { FlightBookingModule } from './flight-booking/flight-booking.module';
@@ -22,12 +21,17 @@ import { FlightBookingComponent } from './flight-booking/flight-booking.componen
     FormsModule,
     HttpModule,
     HttpClientModule,
-    FlightBookingModule, 
     
-    RouterModule.forRoot(APP_ROUTES),
+    // FlightBookingModule, // Reference would prevent Lazy Loading !!!
     
-    SharedModule.forRoot(),
-    OAuthModule.forRoot()
+    RouterModule.forRoot(
+      APP_ROUTES,
+      {
+        // preloadingStrategy: PreloadAllModules
+      }
+    ),
+    
+    SharedModule.forRoot()
   ],
   declarations: [
     AppComponent,

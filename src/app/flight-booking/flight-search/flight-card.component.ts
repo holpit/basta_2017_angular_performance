@@ -1,10 +1,11 @@
+
 import { Flight } from '../../entities/flight';
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'flight-card',
     templateUrl: './flight-card.component.html',
-    // changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FlightCardComponent implements OnInit {
 

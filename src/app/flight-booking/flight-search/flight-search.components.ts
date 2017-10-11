@@ -35,6 +35,10 @@ export class FlightSearchComponent implements OnInit {
         return this.flightService.flights;
     }
   
+    get flights$() {
+        return this.flightService.flights$;
+    }
+    
     search(): void {
 
         if (!this.from || !this.to) {
